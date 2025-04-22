@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 // import { Button } from "@/components/ui/button"; // 사용하지 않으므로 주석 처리 또는 삭제
 import { Label } from "@/components/ui/label";
 // import { useState } from "react"; // 사용하지 않으므로 주석 처리 또는 삭제
+import { QRCodeCanvas } from "qrcode.react"; // QR 코드 라이브러리 임포트 (named import로 변경)
 
 // Zod 스키마 정의 (유효성 검사 규칙)
 const formSchema = z.object({
@@ -47,12 +48,52 @@ export default function Page() {
 
   // 배경색 변경 감지
   const watchedBgColor = watch("bgColor");
+  // SSID와 비밀번호 변경 감지
+  const watchedSsid = watch("ssid");
+  const watchedPassword = watch("password");
+  // 브랜드 이름 변경 감지
+  const watchedBrandName = watch("brandName");
+
+  // WIFI QR 코드 문자열 생성
+  const wifiString = `WIFI:S:${watchedSsid};T:WPA;P:${watchedPassword};;`;
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen p-4 bg-background">
-      <h1 className="text-3xl font-bold mb-8 text-foreground">
+      <h1 className="text-3xl font-bold mb-4 text-foreground">
         WIFI QR 코드 카드 생성
       </h1>
+
+      {/* 카드 미리보기 영역 */}
+      <div
+        className="mb-8 w-full max-w-md p-8 rounded-lg shadow-md flex flex-col items-center relative text-white aspect-square justify-between"
+        style={{ backgroundColor: watchedBgColor }}
+      >
+        {/* 상단 제목 */}
+        <h2 className="text-xl font-semibold absolute top-8">WIFI 접속</h2>
+
+        {/* 중앙 QR 코드 */}
+        <div className="flex-grow flex items-center justify-center">
+          {watchedSsid && watchedPassword && (
+            <QRCodeCanvas
+              value={wifiString}
+              size={180} // 카드 크기에 맞게 조정
+              bgColor={watchedBgColor} // QR 코드 배경 투명 효과를 위해 카드 배경색 전달
+              fgColor="#000000" // QR 코드 색상 (검정)
+              level="H" // 높은 오류 복원 수준
+              className="bg-white p-2 rounded-lg" // QR 코드 자체 배경 흰색 및 패딩
+            />
+          )}
+        </div>
+
+        {/* 하단 브랜드 이름 */}
+        <p className="text-lg absolute bottom-8">{watchedBrandName}</p>
+
+        {/* 하단 오른쪽 레이블 */}
+        <p className="text-xs absolute bottom-4 right-4 opacity-70">
+          by toycrane
+        </p>
+      </div>
+
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="w-full max-w-md p-8 space-y-6 bg-card rounded-lg shadow-md"
@@ -145,12 +186,15 @@ export default function Page() {
         </Button>
          */}
       </form>
-      {/* 카드 미리보기 영역 (다음 Task에서 구현) */}
+
+      {/* QR 코드 표시 (카드 미리보기 구현 전 임시 위치) -> 제거 */}
       {/*
-       <div className="mt-8 w-full max-w-md p-8 rounded-lg shadow-md" style={{ backgroundColor: watchedBgColor }}>
-          카드 미리보기
-       </div>
-       */}
+      {watchedSsid && watchedPassword && (
+        <div className="mt-8">
+          <QRCodeCanvas value={wifiString} size={256} />
+        </div>
+      )}
+      */}
     </div>
   );
 }

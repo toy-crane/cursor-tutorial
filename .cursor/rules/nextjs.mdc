@@ -1,0 +1,12 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+
+# Next.js 규칙
+
+## Route Component Rule
+
+- 모든 페이지 컴포넌트의 이름은 `Page`로 통일합니다.
+  - 예시: `export default function Page() { ... }`

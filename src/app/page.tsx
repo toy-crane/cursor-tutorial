@@ -21,7 +21,7 @@ const formSchema = z.object({
 // 폼 데이터 타입 정의
 type WifiFormData = z.infer<typeof formSchema>;
 
-export default function Home() {
+export default function Page() {
   // const [selectedColor, setSelectedColor] = useState("#ffffff"); // 사용하지 않으므로 주석 처리 또는 삭제
 
   const {
@@ -49,30 +49,26 @@ export default function Home() {
   const watchedBgColor = watch("bgColor");
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen p-4 bg-gray-100 dark:bg-gray-900">
-      <h1 className="text-3xl font-bold mb-8 text-gray-800 dark:text-gray-200">
+    <div className="flex flex-col items-center justify-center min-h-screen p-4 bg-background">
+      <h1 className="text-3xl font-bold mb-8 text-foreground">
         WIFI QR 코드 카드 생성
       </h1>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-md dark:bg-gray-800"
+        className="w-full max-w-md p-8 space-y-6 bg-card rounded-lg shadow-md"
       >
         {/* 브랜드 이름 */}
         <div className="space-y-2">
-          <Label
-            htmlFor="brandName"
-            className="text-gray-700 dark:text-gray-300"
-          >
+          <Label htmlFor="brandName" className="text-card-foreground">
             브랜드 이름
           </Label>
           <Input
             id="brandName"
             placeholder="예: My Cafe"
             {...register("brandName")}
-            className="dark:bg-gray-700 dark:text-gray-200"
           />
           {errors.brandName && (
-            <p className="text-sm text-red-500 dark:text-red-400">
+            <p className="text-sm text-destructive">
               {errors.brandName.message}
             </p>
           )}
@@ -80,28 +76,22 @@ export default function Home() {
 
         {/* 네트워크 이름 (SSID) */}
         <div className="space-y-2">
-          <Label htmlFor="ssid" className="text-gray-700 dark:text-gray-300">
+          <Label htmlFor="ssid" className="text-card-foreground">
             네트워크 이름 (SSID)
           </Label>
           <Input
             id="ssid"
             placeholder="예: MyCafe_WiFi"
             {...register("ssid")}
-            className="dark:bg-gray-700 dark:text-gray-200"
           />
           {errors.ssid && (
-            <p className="text-sm text-red-500 dark:text-red-400">
-              {errors.ssid.message}
-            </p>
+            <p className="text-sm text-destructive">{errors.ssid.message}</p>
           )}
         </div>
 
         {/* 비밀번호 */}
         <div className="space-y-2">
-          <Label
-            htmlFor="password"
-            className="text-gray-700 dark:text-gray-300"
-          >
+          <Label htmlFor="password" className="text-card-foreground">
             비밀번호
           </Label>
           <Input
@@ -109,10 +99,9 @@ export default function Home() {
             type="password"
             placeholder="WIFI 비밀번호"
             {...register("password")}
-            className="dark:bg-gray-700 dark:text-gray-200"
           />
           {errors.password && (
-            <p className="text-sm text-red-500 dark:text-red-400">
+            <p className="text-sm text-destructive">
               {errors.password.message}
             </p>
           )}
@@ -120,25 +109,32 @@ export default function Home() {
 
         {/* 배경색 선택 */}
         <div className="space-y-2">
-          <Label htmlFor="bgColor" className="text-gray-700 dark:text-gray-300">
+          <Label htmlFor="bgColor" className="text-card-foreground">
             카드 배경색
           </Label>
-          <div className="flex items-center gap-2">
-            <Input
-              id="bgColor"
-              type="color"
-              {...register("bgColor")}
-              className="p-1 h-10 w-14 block bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 cursor-pointer rounded-lg disabled:opacity-50 disabled:pointer-events-none"
-              value={watchedBgColor} // react-hook-form 상태와 동기화
-            />
-            <span className="text-sm text-gray-600 dark:text-gray-400">
-              {watchedBgColor}
-            </span>
+          <div className="relative flex items-center gap-2">
+            <Label
+              htmlFor="bgColor"
+              className="flex items-center gap-2 cursor-pointer"
+            >
+              <Input
+                id="bgColor"
+                type="color"
+                className="absolute opacity-0 w-0 h-0 pointer-events-none"
+                {...register("bgColor")}
+                value={watchedBgColor}
+              />
+              <div
+                className="w-6 h-6 rounded-full border border-input"
+                style={{ backgroundColor: watchedBgColor }}
+              />
+              <span className="text-sm text-muted-foreground">
+                {watchedBgColor}
+              </span>
+            </Label>
           </div>
           {errors.bgColor && (
-            <p className="text-sm text-red-500 dark:text-red-400">
-              {errors.bgColor.message}
-            </p>
+            <p className="text-sm text-destructive">{errors.bgColor.message}</p>
           )}
         </div>
 

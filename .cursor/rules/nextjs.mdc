@@ -1,7 +1,7 @@
 ---
 description:
 globs:
-alwaysApply: false
+alwaysApply: true
 ---
 
 # Next.js 규칙
@@ -10,3 +10,9 @@ alwaysApply: false
 
 - 모든 페이지 컴포넌트의 이름은 `Page`로 통일합니다.
   - 예시: `export default function Page() { ... }`
+
+## Styling Rule
+
+- 컬러를 사용할 때, [globals.css](mdc:src/app/globals.css)에 정의된 컬러를 우선
+  고려해줘
+- tailwind의 컬러는 특수한 경우에만 사용해줘

@@ -61,10 +61,10 @@
 
 ## 7. 개발 Task 목록
 
-- [ ] **프로젝트 초기 설정:**
-  - [ ] Next.js 프로젝트 생성 (`create-next-app`)
-  - [ ] Tailwind CSS 설정
-  - [ ] Shadcn/ui 설정 및 필요한 컴포넌트 추가 (`npx shadcn-ui@latest add ...`)
+- [x] **프로젝트 초기 설정:**
+  - [x] Next.js 프로젝트 생성 (`create-next-app`)
+  - [x] Tailwind CSS 설정
+  - [x] Shadcn/ui 설정 및 필요한 컴포넌트 추가 (`npx shadcn-ui@latest add ...`)
   - [ ] `react-hook-form` 설치
   - [ ] `qrcode.react` 설치
   - [ ] `html2canvas` 설치 (또는 Canvas API 직접 사용 결정)

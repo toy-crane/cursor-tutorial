@@ -65,15 +65,15 @@
   - [x] Next.js 프로젝트 생성 (`create-next-app`)
   - [x] Tailwind CSS 설정
   - [x] Shadcn/ui 설정 및 필요한 컴포넌트 추가 (`npx shadcn-ui@latest add ...`)
-  - [ ] `react-hook-form` 설치
-  - [ ] `qrcode.react` 설치
-  - [ ] `html2canvas` 설치 (또는 Canvas API 직접 사용 결정)
+  - [x] `react-hook-form` 설치
+  - [x] `qrcode.react` 설치
+  - [x] `html2canvas` 설치 (또는 Canvas API 직접 사용 결정)
 - [ ] **입력 폼 UI 개발:** (`react-hook-form` 사용)
-  - [ ] 브랜드 이름 입력 필드 (`Input`)
-  - [ ] 네트워크 이름(SSID) 입력 필드 (`Input`)
-  - [ ] 비밀번호 입력 필드 (`Input`, 비밀번호 숨김 처리)
-  - [ ] 배경색 선택 컴포넌트 (Shadcn `ColorPicker` 또는 유사 컴포넌트 활용)
-  - [ ] 폼 유효성 검사 규칙 정의
+  - [x] 브랜드 이름 입력 필드 (`Input`)
+  - [x] 네트워크 이름(SSID) 입력 필드 (`Input`)
+  - [x] 비밀번호 입력 필드 (`Input`, 비밀번호 숨김 처리)
+  - [x] 배경색 선택 컴포넌트 (Shadcn `ColorPicker` 또는 유사 컴포넌트 활용)
+  - [x] 폼 유효성 검사 규칙 정의
 - [ ] **QR 코드 생성 로직 구현:**
   - [ ] 입력된 SSID와 비밀번호를 조합하여 WIFI 접속 문자열 생성
   - [ ] `qrcode.react` 컴포넌트를 사용하여 QR 코드 렌더링

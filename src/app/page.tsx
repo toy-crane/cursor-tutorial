@@ -226,23 +226,7 @@ export default function Page() {
             <p className="text-sm text-destructive">{errors.bgColor.message}</p>
           )}
         </div>
-
-        {/* 제출 버튼 (추후 기능 구현 시 활용) */}
-        {/*
-        <Button type="submit" className="w-full">
-          미리보기 생성 (임시)
-        </Button>
-         */}
       </form>
-
-      {/* QR 코드 표시 (카드 미리보기 구현 전 임시 위치) -> 제거 */}
-      {/*
-      {watchedSsid && watchedPassword && (
-        <div className="mt-8">
-          <QRCodeCanvas value={wifiString} size={256} />
-        </div>
-      )}
-      */}
     </div>
   );
 }

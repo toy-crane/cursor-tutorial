@@ -4,10 +4,10 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { Input } from "@/components/ui/input";
-// import { Button } from "@/components/ui/button"; // 사용하지 않으므로 주석 처리 또는 삭제
+import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-// import { useState } from "react"; // 사용하지 않으므로 주석 처리 또는 삭제
-import { QRCodeCanvas } from "qrcode.react"; // QR 코드 라이브러리 임포트 (named import로 변경)
+import { QRCodeCanvas } from "qrcode.react";
+import html2canvas from "html2canvas-pro";
 
 // Zod 스키마 정의 (유효성 검사 규칙)
 const formSchema = z.object({
@@ -23,8 +23,6 @@ const formSchema = z.object({
 type WifiFormData = z.infer<typeof formSchema>;
 
 export default function Page() {
-  // const [selectedColor, setSelectedColor] = useState("#ffffff"); // 사용하지 않으므로 주석 처리 또는 삭제
-
   const {
     register,
     handleSubmit,
@@ -57,6 +55,39 @@ export default function Page() {
   // WIFI QR 코드 문자열 생성
   const wifiString = `WIFI:S:${watchedSsid};T:WPA;P:${watchedPassword};;`;
 
+  // 이미지 다운로드 함수
+  const handleDownload = async () => {
+    const cardElement = document.querySelector("#wifi-card") as HTMLDivElement;
+    if (!cardElement) return;
+
+    try {
+      const canvas = await html2canvas(cardElement, {
+        backgroundColor: null, // 배경을 투명하게 설정
+        scale: 2, // 해상도를 2배로 증가
+        useCORS: true,
+        onclone: (clonedDoc) => {
+          const clonedElement = clonedDoc.querySelector(
+            "#wifi-card"
+          ) as HTMLElement;
+          if (clonedElement) {
+            clonedElement.style.fontFamily =
+              "system-ui, -apple-system, sans-serif";
+          }
+        },
+      });
+      const dataUrl = canvas.toDataURL("image/png");
+
+      const link = document.createElement("a");
+      link.href = dataUrl;
+      link.download = `${watchedBrandName || "wifi"}-qr-card.png`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } catch (error) {
+      console.error("이미지 생성 중 오류 발생:", error);
+    }
+  };
+
   return (
     <div className="flex flex-col items-center justify-center min-h-screen p-4 bg-background">
       <h1 className="text-3xl font-bold mb-4 text-foreground">
@@ -65,11 +96,12 @@ export default function Page() {
 
       {/* 카드 미리보기 영역 */}
       <div
-        className="mb-8 w-64 p-6 rounded-lg border border-border flex flex-col items-center relative justify-between [aspect-ratio:3/4]"
+        id="wifi-card"
+        className="mb-8 w-64 p-6 rounded-lg border border-border flex flex-col items-center relative justify-between [aspect-ratio:3/4] font-sans"
         style={{ backgroundColor: watchedBgColor }}
       >
         {/* 상단 제목 */}
-        <h2 className="text-xl font-semibold absolute top-6 text-foreground">
+        <h2 className="text-xl font-semibold absolute top-6 text-foreground font-sans">
           WIFI 접속
         </h2>
 
@@ -102,6 +134,13 @@ export default function Page() {
           by toycrane
         </p>
       </div>
+
+      {/* 다운로드 버튼 */}
+      {watchedSsid && watchedPassword && (
+        <Button onClick={handleDownload} className="mb-8" variant="outline">
+          이미지로 저장
+        </Button>
+      )}
 
       <form
         onSubmit={handleSubmit(onSubmit)}

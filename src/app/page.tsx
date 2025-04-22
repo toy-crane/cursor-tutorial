@@ -65,38 +65,47 @@ export default function Page() {
 
       {/* 카드 미리보기 영역 */}
       <div
-        className="mb-8 w-full max-w-md p-8 rounded-lg shadow-md flex flex-col items-center relative text-white aspect-square justify-between"
+        className="mb-8 w-64 p-6 rounded-lg border border-border flex flex-col items-center relative justify-between [aspect-ratio:3/4]"
         style={{ backgroundColor: watchedBgColor }}
       >
         {/* 상단 제목 */}
-        <h2 className="text-xl font-semibold absolute top-8">WIFI 접속</h2>
+        <h2 className="text-xl font-semibold absolute top-6 text-foreground">
+          WIFI 접속
+        </h2>
 
-        {/* 중앙 QR 코드 */}
-        <div className="flex-grow flex items-center justify-center">
-          {watchedSsid && watchedPassword && (
+        {/* 중앙 QR 코드 또는 안내 텍스트 */}
+        <div className="flex-grow flex items-center justify-center w-full">
+          {watchedSsid && watchedPassword ? (
             <QRCodeCanvas
               value={wifiString}
-              size={180} // 카드 크기에 맞게 조정
-              bgColor={watchedBgColor} // QR 코드 배경 투명 효과를 위해 카드 배경색 전달
-              fgColor="#000000" // QR 코드 색상 (검정)
-              level="H" // 높은 오류 복원 수준
-              className="bg-white p-2 rounded-lg" // QR 코드 자체 배경 흰색 및 패딩
+              size={208}
+              bgColor="#FFFFFF"
+              fgColor="#000000"
+              level="H"
             />
+          ) : (
+            <p className="text-center text-sm opacity-80 px-4 text-foreground">
+              SSID와 비밀번호를 입력하면
+              <br />
+              QR 코드가 생성됩니다.
+            </p>
           )}
         </div>
 
         {/* 하단 브랜드 이름 */}
-        <p className="text-lg absolute bottom-8">{watchedBrandName}</p>
+        <p className="text-lg absolute bottom-6 text-foreground">
+          {watchedBrandName}
+        </p>
 
         {/* 하단 오른쪽 레이블 */}
-        <p className="text-xs absolute bottom-4 right-4 opacity-70">
+        <p className="text-xs absolute bottom-3 right-3 opacity-70 text-foreground">
           by toycrane
         </p>
       </div>
 
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="w-full max-w-md p-8 space-y-6 bg-card rounded-lg shadow-md"
+        className="w-full max-w-md p-8 space-y-6 bg-card rounded-lg"
       >
         {/* 브랜드 이름 */}
         <div className="space-y-2">
